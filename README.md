@@ -50,6 +50,9 @@ fi
 3. Install Docker and Docker-Compose
 ```
 sudo pacman -S docker docker-compose
+# for non-root access to docker
+sudo groupadd docker
+sudo usermod -aG docker $USER
 ```
 4. AWS CLI
 ```
@@ -69,11 +72,11 @@ wget https://archive.apache.org/dist/pulsar/pulsar-2.10.1/DEB/apache-pulsar-clie
 after download use either `debtap` or `dpkg` (depends on package manager)
 7. Setup .npmrc file
 8. Vesktop for Discord
-If you install it on ARCH use `make_searchable.sh` 
+If you install it on ARCH use `make_searchable.sh`
 
 
 
-# For GNOME Arch based 
+# For GNOME Arch based
 1. Install extensions
 * Clipboard history
 * Extension List
