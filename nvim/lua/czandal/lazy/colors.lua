@@ -80,8 +80,10 @@ return {
                 disable_background = true,
                 styles = {
                     italic = false,
+                    transparency = true,
                 },
             })
+            ColorMyPencils()
         end
     },
 
