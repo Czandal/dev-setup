@@ -10,6 +10,14 @@ rm -rf ~/.config/nvim
 ln -s $PWD/nvim ~/.config/nvim
 ```
 Launch nvim and enjoy
+
+NOTE: If you run `sudo nvim`, then your config won't be loaded
+If you'd like you can
+```
+sudo ln -s $PWD/nvim /root/.config/nvim
+```
+but this might not be desired (all plugins running wild with root permission)
+Much more sensible would be copying of `remap.lua` only
 # General
 1. ZSH and OMZ
 Install ZSH:
@@ -91,3 +99,30 @@ sudo pacman -Syu bauh
 sudo yay -S debtap
 sudo debtap -U
 ```
+
+# Audio setup
+
+## General
+
+1. You probably want to download [Tidal Hi-Fi](https://github.com/Mastermindzh/tidal-hifi), log in and configure listenbrainz
+
+## Pipewire
+```bash
+# Copy template from /usr/share/pipewire
+sudo cp /usr/share/pipewire/pipewire.conf /etc/pipewire/pipewire.conf
+# Modify the config
+sudo nvim /etc/pipewire/pipewire.conf
+```
+
+The lines you want to change/uncomment/comment
+```
+# This should be set to true
+settings.check-rate         = true
+# This should be commented
+# default.clock.rate          = 96000
+
+# Uncommented, containing all sample rates supported by audio output
+default.clock.allowed-rates = [ 44100 48000 88200 96000 ]
+```
+
+
