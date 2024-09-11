@@ -107,6 +107,12 @@ sudo debtap -U
 1. You probably want to download [Tidal Hi-Fi](https://github.com/Mastermindzh/tidal-hifi), log in and configure listenbrainz
 
 ## Pipewire
+
+NOTE: Pipewire is shit, this config does not work
+Never install wireplumber
+
+If you decide to use this you can use `Wayland`
+
 ```bash
 # Copy template from /usr/share/pipewire
 sudo cp /usr/share/pipewire/pipewire.conf /etc/pipewire/pipewire.conf
@@ -125,4 +131,38 @@ settings.check-rate         = true
 default.clock.allowed-rates = [ 44100 48000 88200 96000 ]
 ```
 
+## Pulseaudio
 
+Since `pipewire` is a bitch, which does not want to work
+
+Go to `/etc/pulse/daemon.conf`
+```
+# Set the following
+nice-level = -11
+resample-method = soxr-vhq
+avoid-resampling = no # tried setting it to yes, had troubles afterwards with audio quality
+default-sample-format = float32le
+default-sample-rate = 96000
+alternate-sample-rate = 44100
+
+# Get rid of this (default.pa in the same directory)
+load-module module-suspend-on-idle
+```
+
+You may want to set default sink
+```
+pactl list short sinks
+pactl set-default-sink <SINK_NAME_FROM_FIRST_COMMAND>
+```
+
+Get rid of `Wayland` - it just doesn't want to work with pulseaudio (tried couple of workarounds, using old x11 is best)
+
+Always make sure that no other audio server is running:
+```
+# check for pipewire
+systemctl --user status pipewire
+```
+if it does, remove it
+```
+sudo pacman -Rs pipewire
+```
