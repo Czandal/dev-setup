@@ -7,5 +7,8 @@
         "before_each",
         "after_each",
         "getHint"
+    ],
+    "diagnostics.disable": [
+        "assign-type-mismatch"
     ]
 }

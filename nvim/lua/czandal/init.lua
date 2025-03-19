@@ -1,6 +1,7 @@
 require("czandal.set")
 require("czandal.remap")
 require("czandal.lazy_init")
+require("czandal.llamaplete")
 
 local augroup = vim.api.nvim_create_augroup
 local CzandalGroup = augroup('czandal', {})
