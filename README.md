@@ -92,7 +92,23 @@ after download use either `debtap` or `dpkg` (depends on package manager)
 7. Setup .npmrc file
 8. Vesktop for Discord
 If you install it on ARCH use `make_searchable.sh`
-
+9. AMD GPU stats
+On Arch:
+```sh
+sudo pacman -S radeontop
+```
+10. Funny utility to brag how important of a GIT contributor you are
+Go to releases of [this](https://github.com/sinclairtarget/git-who/releases)
+Some example
+```
+wget https://github.com/sinclairtarget/git-who/releases/download/v0.6/gitwho_v0.6_linux_amd64.tar.gz
+tar xf gitwho_v0.6_linux_amd64.tar.gz
+rm gitwho_v0.6_linux_amd64.tar.gz
+cat linux_amd64/git-who | sha256sum
+# Before effectively installing, check the sum
+sudo mv linux_amd64/git-who /usr/bin/
+git-who -l
+```
 
 
 # For GNOME Arch based
