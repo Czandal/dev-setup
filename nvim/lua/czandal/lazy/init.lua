@@ -1,7 +1,11 @@
 return {
     {
         "nvim-lua/plenary.nvim",
-        name = "plenary"
+        name = "plenary",
+    },
+    rocks = {
+        enabled = false,
+        hererocks = false,
     },
     {
         "APZelos/blamer.nvim",
