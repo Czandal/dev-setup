@@ -4,6 +4,14 @@ Install ripgrep
 sudo pacman -S ripgrep
 sudo apt install ripgrep
 ```
+Install ollama and pull most used models
+```
+curl -fsSL https://ollama.com/install.sh | sh
+ollama pull qwen2.5-coder:1.5b
+ollama pull qwen2.5-coder:3b
+ollama pull qwen2.5-coder:7b
+ollama pull deepseek-coder-v2:16b
+```
 Link nvim config with your local config
 ```
 rm -rf ~/.config/nvim
@@ -30,7 +38,6 @@ Install ohmyzsh:
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
-
 
 Paste it into .zshrc and follow instruction from comments:
 ```
