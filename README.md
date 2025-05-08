@@ -128,6 +128,10 @@ sudo mv linux_amd64/git-who /usr/bin/
 git-who -l
 ```
 
+11. Lua version manager `luaver`
+```
+curl -fsSL https://raw.githubusercontent.com/dhavalkapil/luaver/master/install.sh | sh -s - -r v1.1.0
+```
 
 # For GNOME Arch based
 1. Install extensions
