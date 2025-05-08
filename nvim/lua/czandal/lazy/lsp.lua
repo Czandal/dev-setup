@@ -29,7 +29,16 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
+                "zls",
+                "clangd",
+                "lua_ls",
+                "ts_ls",
+                "tflint",
+                "jsonls",
+                "typos_lsp",
+                "yamlls",
             },
+            automatic_enable = true,
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
@@ -106,7 +115,7 @@ return {
                 focusable = false,
                 style = "minimal",
                 border = "rounded",
-                source = "always",
+                source = true,
                 header = "",
                 prefix = "",
             },
