@@ -1,6 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "458560534a73f7f8d7a11a146c801db00b081df0" },
-  "autocomplicate": { "branch": "main", "commit": "cc9334c6f10c8cc4f488edd9426349aa335b9d96" },
+  "autocomplicate": { "branch": "main", "commit": "c0f45c339fc1a3e8e713bde9fc581a8f756058fa" },
   "blamer": { "branch": "master", "commit": "e0d43c11697300eb68f00d69df8b87deb0bf52dc" },
   "brightburn.vim": { "branch": "master", "commit": "fc0d2fafc51e86d6065acd54b5e82e686019ff2f" },
   "cloak.nvim": { "branch": "main", "commit": "648aca6d33ec011dc3166e7af3b38820d01a71e4" },
