@@ -11,7 +11,9 @@ return {
         require('telescope').setup({})
 
         local builtin = require('telescope.builtin')
+        -- general find
         vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
+        -- find next word
         vim.keymap.set('n', '<leader>pws', function()
             local word = vim.fn.expand("<cword>")
             builtin.grep_string({ search = word })
@@ -22,6 +24,9 @@ return {
         end)
         vim.keymap.set('n', '<leader>ps', function()
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
+        end)
+        vim.keymap.set('n', '<leader>ph', function ()
+            builtin.oldfiles({})
         end)
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
     end
