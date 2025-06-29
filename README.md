@@ -4,6 +4,8 @@ Install ripgrep
 sudo pacman -S ripgrep
 sudo apt install ripgrep
 ```
+Install [vivify](https://github.com/jannis-baum/vivify?tab=readme-ov-file) -
+it is recommended to use direct download from github package and add it to zshrc
 Install ollama and pull most used models
 ```
 curl -fsSL https://ollama.com/install.sh | sh
