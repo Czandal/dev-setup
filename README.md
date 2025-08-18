@@ -6,6 +6,29 @@ sudo apt install ripgrep
 ```
 Install [vivify](https://github.com/jannis-baum/vivify?tab=readme-ov-file) -
 it is recommended to use direct download from github package and add it to zshrc
+```
+export VIVIFY_PATH="/home/czandal/CodeShit/vivify/vivify-linux/"
+export PATH="$VIVIFY_PATH:$PATH"
+```
+Install ziglang from `https://ziglang.org/download/` and it to PATH
+```
+export ZIG_PATH="/home/czandal/CodeShit/zig/zig-bin"
+export PATH="$ZIG_PATH:$PATH"
+```
+and then clone `https://github.com/zigtools/zls` and build new zls and add it to PATH as well:
+```
+mkdir -p ~/CodeShit/zig
+cd ~/CodeShit/zig
+git clone https://github.com/zigtools/zls
+cd zls
+zig build -Doptimize=ReleaseSafe
+```
+Update PATH:
+```
+export ZLS_PATH="/home/czandal/CodeShit/zig/zls/zig-out/bin"
+export PATH="$ZLS_PATH:$PATH"
+```
+
 Install ollama and pull most used models
 ```
 curl -fsSL https://ollama.com/install.sh | sh
