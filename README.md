@@ -144,11 +144,12 @@ sudo pacman -S radeontop
 
 Go to releases of [this](https://github.com/sinclairtarget/git-who/releases) and install it. Here is example:
 ```
-wget https://github.com/sinclairtarget/git-who/releases/download/v0.6/gitwho_v0.6_linux_amd64.tar.gz
-tar xf gitwho_v0.6_linux_amd64.tar.gz
-rm gitwho_v0.6_linux_amd64.tar.gz
+wget https://github.com/sinclairtarget/git-who/releases/download/v1.2/gitwho_v1.2_linux_amd64.tar.gz
 # Before effectively installing, check the sum
-cat linux_amd64/git-who | sha256sum
+sha256sum gitwho_v1.2_linux_amd64.tar.gz
+# proceed to installation
+tar xf gitwho_v1.2_linux_amd64.tar.gz
+rm gitwho_v1.2_linux_amd64.tar.gz
 sudo mv linux_amd64/git-who /usr/bin/
 git-who -l
 ```
@@ -157,7 +158,29 @@ git-who -l
 ```
 curl -fsSL https://raw.githubusercontent.com/dhavalkapil/luaver/master/install.sh | sh -s - -r v1.1.0
 ```
-
+Update `.zshrc` by adding:
+```
+[ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
+[ -s ~/.luaver/completions/luaver.bash ] && . ~/.luaver/completions/luaver.bash
+```
+Install lua and luarocks
+```bash
+luaver install 5.1.5
+luaver install-luarocks 3.9.2
+```
+12. Golang installation
+```bash
+# Go to `https://go.dev/dl/` and pick release
+mv ~/Downloads/go1*.tar.gz golang.tar.gz
+sha256sum golang.tar.gz
+# Check if output is as expected
+rm -rf /usr/local/go && sudo tar -C /usr/local -xzf golang.tar.gz
+```
+Add new lines to `.zshrc`
+```bash
+export GOLANG_PATH="/usr/local/go/bin"
+export PATH="$GOLANG_PATH:$PATH"
+```
 # For GNOME Arch based
 1. Install extensions
 * Clipboard history
