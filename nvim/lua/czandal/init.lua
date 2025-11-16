@@ -1,6 +1,8 @@
 require("czandal.set")
-require("czandal.remap")
 require("czandal.lazy_init")
+require("czandal.dap_setup")
+require("czandal.remap")
+require("czandal.options")
 
 local augroup = vim.api.nvim_create_augroup
 local CzandalGroup = augroup('czandal', {})
@@ -57,3 +59,4 @@ autocmd('LspAttach', {
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
+

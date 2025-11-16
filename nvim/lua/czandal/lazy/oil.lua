@@ -3,6 +3,8 @@ return {
   ---@module 'oil'
   ---@type oil.SetupOpts
   opts = {},
+  --- Comment out if you need to download new spellfile
+  --- cmd = "Oil",
   -- Optional dependencies
   dependencies = {},
   keymaps = {

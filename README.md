@@ -51,6 +51,25 @@ sudo ln -s $PWD/nvim /root/.config/nvim
 ```
 but this might not be desired (all plugins running wild with root permission)
 Much more sensible would be copying of `remap.lua` only
+
+## Support of zig debugging
+Install `lldb` using package manager
+```bash
+sudo apt install lldb
+sudo pacman -S lldb
+```
+Install vs-code
+```bash
+sudo apt install code
+sudo pacman -S code
+```
+Then run it and install extension `codelldb` from Vadim Chugunov
+Update your PATH to contain the extension
+```bash
+export CODE_LLDB_PATH="/home/czandal/.vscode/extensions/vadimcn.vscode-lldb-1.11.5/adapter/"
+export PATH="$CODE_LLDB_PATH:$PATH"
+```
+
 # General
 1. ZSH and OMZ
 Install ZSH:
