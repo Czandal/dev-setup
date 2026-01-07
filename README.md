@@ -58,15 +58,15 @@ Install `lldb` using package manager
 sudo apt install lldb
 sudo pacman -S lldb
 ```
-Install vs-code
+Install vs-codium
 ```bash
-sudo apt install code
-sudo pacman -S code
+sudo apt install codium
+sudo pacman -S codium
 ```
 Then run it and install extension `codelldb` from Vadim Chugunov
 Update your PATH to contain the extension
 ```bash
-export CODE_LLDB_PATH="/home/czandal/.vscode/extensions/vadimcn.vscode-lldb-1.11.5/adapter/"
+export CODE_LLDB_PATH="/home/czandal/.vscode-oss/extensions/vadimcn.vscode-lldb-1.11.5/adapter/"
 export PATH="$CODE_LLDB_PATH:$PATH"
 ```
 
