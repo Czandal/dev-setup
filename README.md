@@ -69,7 +69,14 @@ Update your PATH to contain the extension
 export CODE_LLDB_PATH="/home/czandal/.vscode-oss/extensions/vadimcn.vscode-lldb-1.11.5/adapter/"
 export PATH="$CODE_LLDB_PATH:$PATH"
 ```
-
+Install llama-server
+1. Find installation for the respective OS (yay and AUR for arch linux)
+2. Install llama-server (preferably with GPU support)
+3. Then before running neovim if you'd like some autocompletions start llama-server with following options
+(tweak accordingly to the power of your machine):
+```sh
+llama-server --fim-qwen-3b-default -fa on --port 8012 --batch-size 1024 --cache-reuse 256
+```
 # General
 1. ZSH and OMZ
 Install ZSH:
