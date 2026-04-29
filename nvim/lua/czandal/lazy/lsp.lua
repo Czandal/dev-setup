@@ -14,6 +14,16 @@ return {
     },
 
     config = function()
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = "oil",
+            callback = function(ev)
+                vim.b[ev.buf].lsp_disabled = true -- Custom flag for plugins checking vim.b.lsp_disabled
+                local clients = vim.lsp.get_clients({ bufnr = ev.buf })
+                for _, client in ipairs(clients) do
+                    client:stop()
+                end
+            end,
+        })
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(
@@ -38,7 +48,7 @@ return {
                 "typos_lsp",
                 "yamlls",
             },
-            automatic_enable = true,
+            automatic_enable = false,
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
@@ -46,7 +56,7 @@ return {
                     }
                 end,
 
-                clangd = function ()
+                clangd = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.clangd.setup({
                         capabilities = capabilities,
@@ -57,7 +67,10 @@ return {
                 zls = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({
-                        root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
+                        root_dir = function(fname)
+                            if not fname or fname:match("^oil://") then return nil end
+                            return lspconfig.util.root_pattern(".git", "build.zig", "zls.json")(fname)
+                        end,
                         cmd = { "zls" },
                         settings = {
                             zls = {
@@ -70,6 +83,18 @@ return {
                     vim.g.zig_fmt_parse_errors = 0
                     vim.g.zig_fmt_autosave = 0
 
+                    -- Override the native vim.lsp.config for zls (new API, takes bufnr + callback)
+                    -- This is what lsp_enable_callback actually uses
+                    vim.lsp.config("zls", {
+                        filetypes = { "zig" }, -- Explicitly exclude oil buffers by filetype
+                        root_dir = function(bufnr, on_dir)
+                            local bufname = vim.api.nvim_buf_get_name(bufnr)
+                            if bufname:match("^oil://") then return end -- Don't call on_dir = LSP skips
+                            local fname = vim.api.nvim_buf_get_name(bufnr)
+                            local root = lspconfig.util.root_pattern(".git", "build.zig", "zls.json")(fname)
+                            if root then on_dir(root) end
+                        end,
+                    })
                 end,
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
