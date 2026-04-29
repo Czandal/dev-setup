@@ -5,12 +5,14 @@ return {
     opts = {
       lsp_file_methods = {
         enabled = false,
-      }
+      },
+      watch_for_changes = true,
+      delete_to_trash = true
     },
     --- Comment out if you need to download new spellfile
     --- cmd = "Oil",
     -- Optional dependencies
-    dependencies = {},
+    dependencies = { { "nvim-mini/mini.icons", opts = {} } },
     keymaps = {
         ["g?"] = "actions.show_help",
         ["<CR>"] = "actions.select",

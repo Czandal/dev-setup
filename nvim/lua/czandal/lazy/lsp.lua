@@ -48,7 +48,7 @@ return {
                 "typos_lsp",
                 "yamlls",
             },
-            automatic_enable = false,
+            automatic_enable = true,
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup {
