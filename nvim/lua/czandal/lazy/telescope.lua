@@ -19,6 +19,16 @@ return {
                     --   preview_width = 0.6,
                     -- }
                 },
+                file_ignore_patterns = {
+                    "node_modules",
+                    "vendor",
+                    "dist",
+                    "build",
+                    "zig-cache",
+                    "zig-pkg",
+                    "zig-out",
+                    ".zig-cache"
+                },
             }
         })
 
