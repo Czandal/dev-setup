@@ -3,10 +3,10 @@ return {
     event = "InsertEnter",
     init = function()
         vim.g.llama_config = {
-            auto_fim = true,
+            auto_fim = false,
 			keymap_fim_accept_full = "<C-S>",
             keymap_fim_accept_line = "<C-L>",
-            enable_at_startup = true,
+            enable_at_startup = false,
             show_info = 0,
             n_predict = 128,
 		    keymap_fim_trigger = "<C-Q>llfim",
