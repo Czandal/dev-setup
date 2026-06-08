@@ -12,6 +12,7 @@ return {
             auto_set_keymaps = true,
             auto_apply_diff_after_generation = false,
             minimize_diff = true,
+            enable_fastapply = true,  -- Enable Fast Apply feature
         },
         mappings = {
             diff = {

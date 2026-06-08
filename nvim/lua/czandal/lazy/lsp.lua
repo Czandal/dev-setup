@@ -34,50 +34,49 @@ return {
 
         require("fidget").setup({})
         require("mason").setup()
+
+        -- Neovim 0.11+/mason-lspconfig v2: the old `handlers` API is gone. Per-server
+        -- configuration is done with `vim.lsp.config()`, and servers are turned on
+        -- with `vim.lsp.enable()` (mason-lspconfig does this via `automatic_enable`).
+
+        -- Global defaults applied to every server (completion capabilities, etc.).
+        vim.lsp.config("*", {
+            capabilities = capabilities,
+        })
+
+        vim.lsp.config("lua_ls", {
+            settings = {
+                Lua = {
+                    runtime = { version = "Lua 5.1" },
+                    diagnostics = {
+                        globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
+                    },
+                },
+            },
+        })
+
+        vim.lsp.config("clangd", {
+            root_markers = { "compile_commands.json", "compile_flags.txt", ".git" },
+        })
+
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
                 "clangd",
-                "lua_ls",
                 "ts_ls",
                 "tflint",
                 "jsonls",
                 "typos_lsp",
                 "yamlls",
             },
-            automatic_enable = true,
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
-                end,
-
-                clangd = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.clangd.setup({
-                        capabilities = capabilities,
-                        root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
-                    })
-                end,
-
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                runtime = { version = "Lua 5.1" },
-                                diagnostics = {
-                                    globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
-                                }
-                            }
-                        }
-                    }
-                end,
-            }
+            -- gopls is configured and enabled by go.nvim (lsp_cfg = true); enabling
+            -- it here too would double-attach and break go.nvim's semantic-token
+            -- on_attach handler.
+            automatic_enable = {
+                exclude = { "gopls" },
+            },
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }

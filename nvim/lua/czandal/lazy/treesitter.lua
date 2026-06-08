@@ -1,36 +1,47 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    -- The new rewrite lives on the `main` branch (required for Neovim 0.11+/0.12).
+    -- Pin it here so it stays in sync with the dependency declared in go.lua.
+    branch = "main",
+    -- Load eagerly so the FileType autocmd below is registered before the
+    -- first buffer's filetype is set.
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-        -- 1. OBSOLETE: require("nvim-treesitter.configs").setup(...) is GONE.
-        -- Highlighting is now enabled by default in Neovim for installed parsers.
+        -- On the `main` branch there is no `configs.setup()` anymore. Parsers and
+        -- queries are installed into stdpath("data")/site (already on the rtp),
+        -- and highlighting must be started manually per buffer.
+        local treesitter = require("nvim-treesitter")
 
-        -- 2. "ensure_installed" is no longer a core feature in the same way.
-        -- You can manually install parsers via command: :TSInstall javascript lua c ...
-        -- Or use a simple loop to install them if missing:
-        local parsers_to_install = {
-            "vimdoc", "javascript", "typescript", "c", "lua", "rust",
-            "jsdoc", "bash", "markdown"
+        local ensure_installed = {
+            "go", "gomod", "gosum", "gowork", "gotmpl",
+            "vimdoc", "javascript", "typescript", "tsx", "c", "lua", "rust",
+            "jsdoc", "bash", "markdown", "markdown_inline",
         }
 
-        -- Optional: Simple auto-installer loop (adaptation for new version)
-        -- Note: The API for installation might differ, but :TSInstall <lang> works.
-        for _, lang in ipairs(parsers_to_install) do
-            if vim.fn.executable("tree-sitter") == 1 then
-                -- This is a fallback; usually you just run :TSInstall all manually once.
-                vim.cmd("silent! TSInstall " .. lang)
-            end
-        end
+        -- Install any missing parsers (async, no-op for already installed ones).
+        treesitter.install(ensure_installed)
 
-        -- 3. Register 'templ' filetype (Standard Neovim API)
+        -- Register the `templ` filetype and parser mapping.
         vim.filetype.add({ extension = { templ = "templ" } })
-
-        -- 4. Register 'templ' parser
-        -- The "parser_configs" module is also likely changed/removed.
-        -- For custom parsers on 'main', you typically need to install them manually
-        -- or wait for upstream support.
-        -- However, you can register the language for Neovim:
         vim.treesitter.language.register("templ", "templ")
-    end
-}
 
+        -- Start treesitter highlighting (and treesitter-based folding) for every
+        -- buffer whose filetype has a parser available. This is what gives Go
+        -- proper identifier highlighting (function names -> @function, calls ->
+        -- @function.call, methods -> @function.method, etc.).
+        vim.api.nvim_create_autocmd("FileType", {
+            group = vim.api.nvim_create_augroup("czandal_treesitter", { clear = true }),
+            callback = function(args)
+                local buf = args.buf
+                local ft = vim.bo[buf].filetype
+                local lang = vim.treesitter.language.get_lang(ft) or ft
+
+                -- pcall: silently skip filetypes without an installed parser.
+                if pcall(vim.treesitter.start, buf, lang) then
+                    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end
+            end,
+        })
+    end,
+}
