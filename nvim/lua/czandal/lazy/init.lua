@@ -1,19 +1,9 @@
 return {
     {
-        "nvim-lua/plenary.nvim",
-        name = "plenary",
-    },
-    rocks = {
-        enabled = false,
-        hererocks = false,
-    },
-    {
-        "APZelos/blamer.nvim",
-        name = "blamer"
-    },
-    {
-        "sbdchd/neoformat",
-        name = "neoformat"
+        "lewis6991/gitsigns.nvim",
+        opts = {
+            current_line_blame = true,
+        },
     },
     {
         "folke/lazydev.nvim",
@@ -24,9 +14,4 @@ return {
             },
         },
     },
-    {
-        "JezerM/oil-lsp-diagnostics.nvim",
-        dependencies = { "stevearc/oil.nvim" },
-        opts = {}
-    }
 }

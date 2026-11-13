@@ -17,6 +17,7 @@ return {
             "go", "gomod", "gosum", "gowork", "gotmpl",
             "vimdoc", "javascript", "typescript", "tsx", "c", "lua", "rust",
             "jsdoc", "bash", "markdown", "markdown_inline",
+            "zig", "templ", "json", "yaml", "vim", "query",
         }
 
         -- Install any missing parsers (async, no-op for already installed ones).
@@ -24,7 +25,6 @@ return {
 
         -- Register the `templ` filetype and parser mapping.
         vim.filetype.add({ extension = { templ = "templ" } })
-        vim.treesitter.language.register("templ", "templ")
 
         -- Start treesitter highlighting (and treesitter-based folding) for every
         -- buffer whose filetype has a parser available. This is what gives Go

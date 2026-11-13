@@ -5,8 +5,6 @@
         "it",
         "describe",
         "before_each",
-        "after_each",
-        "getHint",
-        "g"
+        "after_each"
     ]
 }

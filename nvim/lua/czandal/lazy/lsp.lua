@@ -1,8 +1,8 @@
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        "mason-org/mason.nvim",
+        "mason-org/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
@@ -47,7 +47,7 @@ return {
         vim.lsp.config("lua_ls", {
             settings = {
                 Lua = {
-                    runtime = { version = "Lua 5.1" },
+                    runtime = { version = "LuaJIT" },
                     diagnostics = {
                         globals = { "bit", "vim", "it", "describe", "before_each", "after_each" },
                     },
