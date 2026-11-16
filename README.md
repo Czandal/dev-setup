@@ -37,6 +37,10 @@ ollama pull qwen2.5-coder:3b
 ollama pull qwen2.5-coder:7b
 ollama pull deepseek-coder-v2:16b
 ```
+Create "korektor-pl" for usage of custom AI-made correction plugin for Polish:
+```
+ollama create korektor-pl -f bielik-korektor.mode
+```
 Link nvim config with your local config
 ```
 rm -rf ~/.config/nvim
