@@ -10,7 +10,7 @@ local M = {}
 M.config = {
     host = "http://localhost:11434",
     keymap = "<leader>b",
-    timeout = 300000, -- ms; an 11B model on long text can be slow
+    timeout = 600000, -- ms; an 11B model on long text can be slow
     skills = {},
 }
 M.skills = {}
