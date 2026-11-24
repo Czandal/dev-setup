@@ -96,6 +96,9 @@ Installs the fonts in use and pins them, so every machine renders the same:
   Emoji, nvim icons from FantasqueSansM Nerd Font Mono: `fonts/50-dev-setup.conf` linked to
   `~/.config/fontconfig/conf.d/` (browsers and the md-to-pdf output use these)
 * DejaVu and Liberation for code blocks in books and Arial/Times metrics
+* what `nvim/md-to-pdf` asks for: Inter and JetBrains Mono (`style.css`), Libertinus (`book.css`
+  fallback) from packages, EB Garamond (`book.css`) downloaded from google/fonts at a pinned
+  commit, checksummed, to `~/.local/share/fonts/eb-garamond`
 
 Ends with an `fc-match` check that warns about anything missing. On apt, Adwaita and the nerd font
 are not packaged, install them by hand.
