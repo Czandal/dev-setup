@@ -85,6 +85,21 @@ Installs ptyxis (tilix is unmaintained) and debtap. Install extensions yourself:
 * Search Light (configure it!!!)
 * System Monitor
 
+# Fonts
+```
+./setup fonts
+```
+Installs the fonts in use and pins them, so every machine renders the same:
+* UI Adwaita Sans 11 (documents 12), terminal and GNOME monospace Adwaita Mono 11, grayscale
+  antialiasing, slight hinting (gsettings; GNOME Console follows the system font)
+* `sans-serif`/`serif`/`monospace` → Noto Sans / Noto Serif / Noto Sans Mono, `emoji` → Noto Color
+  Emoji, nvim icons from FantasqueSansM Nerd Font Mono: `fonts/50-dev-setup.conf` linked to
+  `~/.config/fontconfig/conf.d/` (browsers and the md-to-pdf output use these)
+* DejaVu and Liberation for code blocks in books and Arial/Times metrics
+
+Ends with an `fc-match` check that warns about anything missing. On apt, Adwaita and the nerd font
+are not packaged, install them by hand.
+
 # Audio setup
 
 1. You probably want to download [Tidal Hi-Fi](https://github.com/Mastermindzh/tidal-hifi), log in and configure listenbrainz
