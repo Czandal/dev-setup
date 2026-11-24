@@ -1,0 +1,79 @@
+/* Book stylesheet for :MdBook (novel, story collection). */
+html { font-size: 10.5pt; }
+body {
+    font-family: "EB Garamond", "Libertinus Serif", "Linux Libertine O", "Noto Serif", Georgia, serif;
+    line-height: 1.45;
+    color: #111;
+    margin: 0;
+    text-align: justify;
+    hyphens: auto;
+    font-variant-numeric: oldstyle-nums;
+    text-rendering: optimizeLegibility;
+}
+
+/* prose: no gaps between paragraphs, first-line indent instead */
+p { margin: 0; text-indent: 1.4em; orphans: 2; widows: 2; }
+h1 + p, h2 + p, h3 + p, hr + p, blockquote + p, body > p:first-child { text-indent: 0; }
+
+/* story title: own page start, set low on the page */
+h1 {
+    break-before: page;
+    margin: 22% 0 2.2em;
+    font-size: 1.9em;
+    font-weight: normal;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-align: center;
+    hyphens: manual;
+}
+body > h1:first-child { break-before: auto; }
+
+/* chapter */
+h2 {
+    break-before: page;
+    margin: 16% 0 1.8em;
+    font-size: 1.25em;
+    font-weight: normal;
+    font-style: italic;
+    text-align: center;
+    hyphens: manual;
+}
+h1 + h2 { break-before: avoid; margin-top: 0; }
+
+/* section inside a chapter */
+h3, h4, h5, h6 {
+    margin: 1.6em 0 0.6em;
+    font-size: 1em;
+    font-weight: normal;
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    text-align: center;
+    break-after: avoid;
+}
+
+/* scene break */
+hr { border: 0; margin: 1.3em 0; text-align: center; break-after: avoid; }
+hr::after { content: "* \00a0 * \00a0 *"; letter-spacing: 0.1em; }
+
+/* letters, quoted text, epigraphs */
+blockquote { margin: 1em 1.6em; font-style: italic; }
+blockquote p { text-indent: 0; }
+blockquote p + p { margin-top: 0.5em; }
+h1 + blockquote, h2 + blockquote { margin: 0 12% 2.2em 30%; text-align: right; font-size: 0.95em; }
+
+em { font-style: italic; }
+strong { font-weight: 600; }
+a { color: inherit; text-decoration: none; }
+
+ul, ol { margin: 0.8em 0; padding-left: 1.6em; text-align: left; }
+img { display: block; max-width: 100%; margin: 1.2em auto; break-inside: avoid; }
+
+code, pre { font-family: "DejaVu Sans Mono", monospace; font-size: 0.82em; }
+pre { margin: 1em 0; white-space: pre-wrap; text-align: left; break-inside: avoid; }
+
+table { border-collapse: collapse; margin: 1em auto; font-size: 0.92em; text-align: left; break-inside: avoid; }
+th, td { padding: 0.25em 0.8em; border-bottom: 0.5pt solid #999; }
+th { font-weight: normal; font-variant: small-caps; }
+
+.page-break { break-after: page; }

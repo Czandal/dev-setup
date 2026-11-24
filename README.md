@@ -17,8 +17,9 @@ Installs ripgrep, tree-sitter-cli, [md-to-pdf](https://github.com/simonhaenisch/
 Needs Neovim 0.12+. LSP servers and `codelldb` (zig debugging) come from Mason on first start.
 
 Markdown goes to PDF through puppeteer (system chromium, node from mise): `:MdPdf`, `:MdHtml`
-(add `!` to open the result), `:MdPreview` re-renders on every save. Look is tuned in
-`nvim/md-to-pdf/` (`style.css`, `config.js`), per document in its front-matter.
+(add `!` to open the result), `:MdPreview` re-renders on every save. `:MdBook` lays it out as a
+book (A5, serif, `#` story, `##` chapter, `---` scene break). Look is tuned in `nvim/md-to-pdf/`
+(`style.css`, `book.css`), per document in its front-matter.
 Paranoid mise may refuse a puppeteer dependency published without provenance; the script then
 prints the exemption to add yourself once you have checked that release.
 

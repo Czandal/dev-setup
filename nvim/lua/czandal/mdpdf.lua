@@ -1,14 +1,16 @@
 -- Markdown -> HTML -> PDF through md-to-pdf (Puppeteer, headless Chromium).
 --   :MdPdf[!]    write <file>.pdf next to the markdown file (! opens it)
 --   :MdHtml[!]   write the styled <file>.html instead (! opens it)
---   :MdPreview   toggle: open the PDF and re-render it on every save
--- Styling lives in nvim/md-to-pdf/ (config.js, style.css); front-matter in a
+--   :MdBook[!]   PDF laid out as a book: A5, serif, chapters, page numbers
+--   :MdPreview   toggle: open the PDF and re-render it on every save (:MdPreview book)
+-- Styling lives in nvim/md-to-pdf/ (config.js + style.css, book.js + book.css); front-matter in a
 -- document overrides it. Install: ./setup nvim
 local M = {}
 
 M.config = {
     cmd = "md-to-pdf",
     config_file = vim.fn.stdpath("config") .. "/md-to-pdf/config.js",
+    book_config_file = vim.fn.stdpath("config") .. "/md-to-pdf/book.js",
     -- used when PUPPETEER_EXECUTABLE_PATH is not set, first one found wins
     browsers = { "chromium", "chromium-browser", "google-chrome-stable", "google-chrome" },
     timeout = 120000, -- ms
@@ -33,7 +35,7 @@ local function browser()
     end
 end
 
---- Render the file of `buf`. opts: { html = bool, open = bool, quiet = bool }
+--- Render the file of `buf`. opts: { html = bool, book = bool, open = bool, quiet = bool }
 function M.render(buf, opts)
     opts = opts or {}
     buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
@@ -53,7 +55,7 @@ function M.render(buf, opts)
     end
     st.running = true
 
-    local cmd = { M.config.cmd, "--config-file", M.config.config_file }
+    local cmd = { M.config.cmd, "--config-file", opts.book and M.config.book_config_file or M.config.config_file }
     if opts.html then
         cmd[#cmd + 1] = "--as-html"
     end
@@ -86,7 +88,7 @@ function M.render(buf, opts)
     end))
 end
 
-function M.toggle_preview(buf)
+function M.toggle_preview(buf, book)
     buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
     local st = state[buf] or {}
     state[buf] = st
@@ -98,14 +100,14 @@ function M.toggle_preview(buf)
     vim.api.nvim_create_autocmd("BufWritePost", {
         group = group,
         buffer = buf,
-        callback = function() M.render(buf, { quiet = true }) end,
+        callback = function() M.render(buf, { quiet = true, book = book }) end,
     })
     vim.api.nvim_create_autocmd("BufWipeout", {
         group = group,
         buffer = buf,
         callback = function() state[buf] = nil end,
     })
-    M.render(buf, { open = true }) -- the viewer reloads the file on later saves
+    M.render(buf, { open = true, book = book }) -- the viewer reloads the file on later saves
 end
 
 function M.setup(opts)
@@ -113,7 +115,12 @@ function M.setup(opts)
     local cmd = vim.api.nvim_create_user_command
     cmd("MdPdf", function(a) M.render(0, { open = a.bang }) end, { bang = true, desc = "Markdown -> PDF" })
     cmd("MdHtml", function(a) M.render(0, { html = true, open = a.bang }) end, { bang = true, desc = "Markdown -> HTML" })
-    cmd("MdPreview", function() M.toggle_preview(0) end, { desc = "Toggle PDF preview, re-render on save" })
+    cmd("MdBook", function(a) M.render(0, { book = true, open = a.bang }) end, { bang = true, desc = "Markdown -> book PDF" })
+    cmd("MdPreview", function(a) M.toggle_preview(0, a.args == "book") end, {
+        nargs = "?",
+        complete = function() return { "book" } end,
+        desc = "Toggle PDF preview, re-render on save",
+    })
 end
 
 return M
