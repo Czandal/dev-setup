@@ -8,7 +8,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-PROFILES=(nvim mise llm shell tools gnome fonts audio tidal claude)
+PROFILES=(nvim mise llm shell tools gnome fonts audio tidal claude cursor)
 
 desc() { sed -n 's/^# desc: //p' "scripts/$1.sh"; }
 list() { for p in "${PROFILES[@]}"; do printf '%-6s %s\n' "$p" "$(desc "$p")"; done; }
