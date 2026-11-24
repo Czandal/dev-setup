@@ -75,6 +75,24 @@ App missing in the launcher? `scripts/desktop-entry.sh <exec> <name> [comment] [
 4. Pulsar: `npm install pulsar-client` ships its own binaries now. If you still need the C++ client,
 it lives [here](https://downloads.apache.org/pulsar/) under `pulsar-client-cpp-*` (use `debtap` or `dpkg`).
 
+# Claude Code
+```
+./setup claude
+```
+Installs the CLI (AUR `claude-code`, native installer elsewhere), links `claude/settings.json` to
+`~/.claude/settings.json`, writes `~/.claude/CLAUDE.md` from `claude/CLAUDE.md` plus the optional
+gitignored `claude/CLAUDE.local.md` (the old file is backed up), adds the official plugin marketplace
+with gopls, and asks for each MCP server's URL and token, both skippable. Nothing private is in the
+repo. `CLAUDE.md` is generated, so rerun after editing it.
+
+# Cursor
+```
+./setup cursor
+```
+Installs cursor-bin (AUR) and links `cursor/settings.json` to `~/.config/Cursor/User/settings.json`.
+MCP servers you enter are merged into `~/.cursor/mcp.json`: existing entries are kept, the old file is
+backed up, the file is written with mode 600. Cursor's state and account data are not in the repo.
+
 # For GNOME Arch based
 ```
 ./setup gnome
