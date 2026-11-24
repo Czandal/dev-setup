@@ -105,7 +105,17 @@ are not packaged, install them by hand.
 
 # Audio setup
 
-1. You probably want to download [Tidal Hi-Fi](https://github.com/Mastermindzh/tidal-hifi), log in and configure listenbrainz
+1. `./setup audio`, then `./setup tidal` (below)
+
+## TIDAL
+```
+./setup tidal
+```
+Installs [SONE](https://github.com/lullabyX/sone) (AUR `sone-bin`, Flathub elsewhere). Tidal Hi-Fi
+and the web player run on Chromium, which resamples everything to 48 kHz, so the DAC never
+follows the track. SONE hands PipeWire the track's own rate. Its exclusive ALSA mode skips
+PipeWire entirely; the Flatpak needs `flatpak override --user --device=all` for that (the script
+asks).
 
 ## Pipewire
 ```
@@ -117,7 +127,7 @@ Installs pipewire, pipewire-pulse and wireplumber (replaces pulseaudio, it asks 
 track instead of resampling:
 ```
 context.properties = {
-    default.clock.allowed-rates = [ 44100 48000 88200 96000 ]
+    default.clock.allowed-rates = [ 44100 48000 88200 96000 192000 ]
 }
 ```
 List every rate your audio output supports. Check with `pw-top` while something plays.
