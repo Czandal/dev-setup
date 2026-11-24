@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# desc: Neovim config, its dependencies, vivify, plugins
+# desc: Neovim config, its dependencies, md-to-pdf, plugins
 . "$(dirname "$0")/lib.sh" "$@"
 
 step "Neovim dependencies"
@@ -13,11 +13,27 @@ fi
 step "Config"
 link "$ROOT/nvim" "$HOME/.config/nvim" || true
 
-step "Vivify (markdown preview)"
-if have viv; then
-    say "already installed: viv"
-elif ! aur vivify-bin; then
-    say "download https://github.com/jannis-baum/vivify/releases and put viv + vivify-server on PATH"
+step "md-to-pdf (markdown -> HTML -> PDF through puppeteer, :MdPdf)"
+# puppeteer drives the system browser, its own Chromium download is skipped
+have chromium || have chromium-browser || have google-chrome-stable || pkg chromium || true
+if have md-to-pdf; then
+    say "already installed: md-to-pdf"
+elif have mise; then
+    if ! mise which npm >/dev/null 2>&1 && [ "$DRY_RUN" != 1 ]; then
+        say "needs node: ./setup mise --tools, then rerun"
+    elif confirm "Install md-to-pdf with mise?" \
+        && ! run env PUPPETEER_SKIP_DOWNLOAD=1 mise use -g npm:md-to-pdf@5; then
+        # Never bypassed from here: read the error above, check the release it
+        # names, and only then exempt that one version yourself.
+        warn "mise refused md-to-pdf. If it is the trust policy on a puppeteer dependency:"
+        say "review the package@version it names, then put under [tools] in ~/.config/mise/config.toml"
+        say '  "npm:md-to-pdf" = { version = "5", trust_policy_excludes = ["<package>@<version>"] }'
+        say "and run: PUPPETEER_SKIP_DOWNLOAD=1 mise install"
+    fi
+elif have npm; then
+    confirm "Install md-to-pdf with npm -g?" && run env PUPPETEER_SKIP_DOWNLOAD=1 npm install -g 'md-to-pdf@^5.2.5'
+else
+    say "needs node: ./setup mise --tools, then rerun"
 fi
 
 step "Plugins"

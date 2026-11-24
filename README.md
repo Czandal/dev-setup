@@ -12,9 +12,15 @@ and can be rerun safely. Arch first, `apt` where a package exists.
 ```
 ./setup nvim
 ```
-Installs ripgrep, tree-sitter-cli, [vivify](https://github.com/jannis-baum/vivify), links
+Installs ripgrep, tree-sitter-cli, [md-to-pdf](https://github.com/simonhaenisch/md-to-pdf), links
 `nvim/` to `~/.config/nvim` (old config is moved to `nvim.bak.<date>`) and restores plugins.
 Needs Neovim 0.12+. LSP servers and `codelldb` (zig debugging) come from Mason on first start.
+
+Markdown goes to PDF through puppeteer (system chromium, node from mise): `:MdPdf`, `:MdHtml`
+(add `!` to open the result), `:MdPreview` re-renders on every save. Look is tuned in
+`nvim/md-to-pdf/` (`style.css`, `config.js`), per document in its front-matter.
+Paranoid mise may refuse a puppeteer dependency published without provenance; the script then
+prints the exemption to add yourself once you have checked that release.
 
 Zig and zls come from mise (below), zls has to match the zig minor version.
 
@@ -44,9 +50,9 @@ llama-server --fim-qwen-3b-default -fa on --port 8012 --batch-size 1024 --cache-
 ```
 Paranoid and clean by default: installs no tools, never auto-installs, and loads nothing from a
 repo (`mise.toml`, `.env`, `.nvmrc`, ...) until you `mise trust` it, again after every change.
-To get what I have right now:
+To get my toolchain:
 ```
-mise use -g node@24.3.0 python@3.13.1 go@1.24.2 zig@0.15.1 zls@0.15.1 lua@5.1.5
+mise use -g node@24.3.0 python@3.13.1 go@1.24.2 zig@0.17.1 zls@0.17.0 lua@5.1.5
 ```
 (same as `./setup mise --tools`). Per project: `mise use node@18 && mise trust`.
 
@@ -57,7 +63,7 @@ mise use -g node@24.3.0 python@3.13.1 go@1.24.2 zig@0.15.1 zls@0.15.1 lua@5.1.5
 zsh, ohmyzsh, autosuggestions and syntax highlighting. Theme is "agnoster", if you want it to
 work on terminal without powerline fonts I suggest "avit".
 
-3. Docker, AWS CLI, AMD GPU stats (`amdgpu_top`), Vesktop for Discord and
+3. Docker, AWS CLI, GPU stats (`amdgpu_top` on AMD, `nvtop` otherwise), Vesktop for Discord and
 [git-who](https://github.com/sinclairtarget/git-who), funny utility to brag how important
 of a GIT contributor you are (`git-who -l`)
 ```

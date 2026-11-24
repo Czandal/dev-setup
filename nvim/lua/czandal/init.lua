@@ -3,6 +3,7 @@ require("czandal.lazy_init")
 require("czandal.dap_setup")
 require("czandal.remap")
 require("czandal.ollama").setup()
+require("czandal.mdpdf").setup()
 require("czandal.options")
 
 local augroup = vim.api.nvim_create_augroup

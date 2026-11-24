@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# desc: docker, aws cli, amdgpu_top, git-who, vesktop (asked one by one)
+# desc: docker, aws cli, GPU stats, git-who, vesktop (asked one by one)
 . "$(dirname "$0")/lib.sh" "$@"
 
 step "Docker"
@@ -27,10 +27,16 @@ elif confirm "Install AWS CLI v2 from the official zip (sudo)?"; then
     rm -rf "$tmp"
 fi
 
-step "AMD GPU stats"
-have amdgpu_top && say "already installed: amdgpu_top" \
-    || pkg amdgpu_top - \
-    || say "skipped (other distros: https://github.com/Umio-Yasuno/amdgpu_top/releases)"
+step "GPU stats"
+# 0x1002 is AMD; nvtop covers Intel, NVIDIA and everything else
+if grep -qsx 0x1002 /sys/class/drm/card*/device/vendor; then
+    have amdgpu_top && say "already installed: amdgpu_top" || pkg amdgpu_top - || gpu=nvtop
+else
+    gpu=nvtop
+fi
+if [ "${gpu:-}" = nvtop ]; then
+    have nvtop && say "already installed: nvtop" || pkg nvtop || true
+fi
 
 step "git-who (who wrote this repo)"
 if have git-who; then

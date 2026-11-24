@@ -1,0 +1,75 @@
+/* Print stylesheet for :MdPdf. Tune freely, every rule ends up in the PDF. */
+:root {
+    --text: #1f2328;
+    --muted: #59636e;
+    --line: #d1d9e0;
+    --soft: #f6f8fa;
+    --accent: #0969da;
+}
+
+html { font-size: 11pt; }
+body {
+    font-family: "Inter", "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+    color: var(--text);
+    margin: 0;
+    hyphens: auto;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.25;
+    margin: 1.6em 0 0.5em;
+    break-after: avoid;
+    hyphens: manual;
+}
+h1 { font-size: 2em; margin-top: 0; padding-bottom: 0.25em; border-bottom: 1px solid var(--line); }
+h2 { font-size: 1.45em; padding-bottom: 0.2em; border-bottom: 1px solid var(--line); }
+h3 { font-size: 1.2em; }
+h4, h5, h6 { font-size: 1em; }
+h6 { color: var(--muted); }
+
+p, ul, ol, table, pre, blockquote { margin: 0 0 0.9em; }
+p { orphans: 3; widows: 3; }
+ul, ol { padding-left: 1.6em; }
+li + li { margin-top: 0.2em; }
+li > ul, li > ol { margin: 0.2em 0 0; }
+
+a { color: var(--accent); text-decoration: none; }
+hr { border: 0; border-top: 1px solid var(--line); margin: 1.6em 0; }
+img { max-width: 100%; break-inside: avoid; }
+
+code, pre {
+    font-family: "JetBrains Mono", "Fira Code", "DejaVu Sans Mono", monospace;
+    font-size: 0.88em;
+}
+code { background: var(--soft); padding: 0.12em 0.35em; border-radius: 4px; }
+pre {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 0.8em 1em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    break-inside: avoid;
+}
+/* !important: the highlight.js theme is loaded after this file */
+pre code { background: none !important; padding: 0 !important; font-size: inherit; }
+
+blockquote {
+    margin-left: 0;
+    padding: 0.1em 1em;
+    color: var(--muted);
+    border-left: 3px solid var(--line);
+}
+blockquote > :last-child { margin-bottom: 0; }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.95em; break-inside: avoid; }
+th, td { border: 1px solid var(--line); padding: 0.4em 0.7em; text-align: left; vertical-align: top; }
+th { background: var(--soft); font-weight: 600; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
+
+/* force a new page from markdown: <div class="page-break"></div> */
+.page-break { break-after: page; }

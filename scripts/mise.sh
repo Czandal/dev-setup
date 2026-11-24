@@ -3,7 +3,7 @@
 . "$(dirname "$0")/lib.sh" "$@"
 
 # The toolchain this repo is used with. zls has to match the zig minor version.
-TOOLS=(node@24.3.0 python@3.13.1 go@1.24.2 zig@0.15.1 zls@0.15.1 lua@5.1.5)
+TOOLS=(node@24.3.0 python@3.13.1 go@1.24.2 zig@0.17.1 zls@0.17.0 lua@5.1.5)
 
 step "mise"
 if have mise; then
