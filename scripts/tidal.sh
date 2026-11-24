@@ -49,4 +49,8 @@ if installed tidal-hifi || installed tidal-hifi-bin || installed tidal-hifi-git;
 fi
 say "log in: Get Login Code, approve on link.tidal.com; set streaming quality to Max"
 say "check while it plays: pw-top (RATE column of the DAC follows the track)"
+say "untouched samples: exclusive ALSA mode on the DAC's hw device (not 'default'/'pipewire',"
+say "  which go back through PipeWire); other apps go silent on that DAC while SONE plays"
+say "through PipeWire, keep SONE and the system volume at 100% (change volume on the DAC) and"
+say "  nothing else playing, or PipeWire resamples SONE to the other stream's rate"
 exit 0

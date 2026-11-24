@@ -145,7 +145,7 @@ Installs pipewire, pipewire-pulse and wireplumber (replaces pulseaudio, it asks 
 track instead of resampling:
 ```
 context.properties = {
-    default.clock.allowed-rates = [ 44100 48000 88200 96000 192000 ]
+    default.clock.allowed-rates = [ 44100 48000 88200 96000 176400 192000 ]
 }
 ```
 List every rate your audio output supports. Check with `pw-top` while something plays.

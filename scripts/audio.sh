@@ -3,7 +3,7 @@
 . "$(dirname "$0")/lib.sh" "$@"
 
 # Every rate your DAC supports; PipeWire switches between them instead of resampling.
-RATES="${RATES:-44100 48000 88200 96000 192000}"
+RATES="${RATES:-44100 48000 88200 96000 176400 192000}"
 
 step "PipeWire"
 if installed pulseaudio; then
