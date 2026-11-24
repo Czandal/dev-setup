@@ -1,4 +1,4 @@
-FROM SpeakLeash/bielik-11b-v3.0-instruct:Q4_K_M
+FROM SpeakLeash/bielik-11b-v3.1-instruct:Q4_K_M
 
 SYSTEM """
 Jesteś polskim korektorem tekstu.

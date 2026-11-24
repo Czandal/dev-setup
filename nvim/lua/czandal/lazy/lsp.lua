@@ -35,6 +35,15 @@ return {
         require("fidget").setup({})
         require("mason").setup()
 
+        -- Debug adapter for dap_setup.lua; Mason puts its bin dir on PATH.
+        local registry = require("mason-registry")
+        registry.refresh(function()
+            local ok, codelldb = pcall(registry.get_package, "codelldb")
+            if ok and not codelldb:is_installed() then
+                codelldb:install()
+            end
+        end)
+
         -- Neovim 0.11+/mason-lspconfig v2: the old `handlers` API is gone. Per-server
         -- configuration is done with `vim.lsp.config()`, and servers are turned on
         -- with `vim.lsp.enable()` (mason-lspconfig does this via `automatic_enable`).

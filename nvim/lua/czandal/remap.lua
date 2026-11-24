@@ -1,4 +1,3 @@
-vim.g.mapleader = " "
 -- bind for Oil
 vim.keymap.set("n", "<leader>pv", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 -- Use this, if you don't need Oil anymore
