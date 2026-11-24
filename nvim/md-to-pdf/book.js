@@ -5,6 +5,21 @@
 // Front-matter in a document overrides anything here.
 const path = require("path");
 
+// Runs in the page before printing: a line starting with `- ` is dialogue. marked turns it
+// into a bullet list, so each top-level list item becomes a paragraph with an em dash in front.
+const dialogues = `
+for (const ul of Array.from(document.querySelectorAll("ul"))) {
+    if (ul.closest("li")) continue; // nested lists stay lists
+    const paras = Array.from(ul.children).map((li) => {
+        const p = document.createElement("p");
+        p.className = "dialogue";
+        // loose items wrap their text in <p>, which cannot nest in a <p>
+        p.innerHTML = "\\u2014\\u00a0" + li.innerHTML.replace(/<\\/?p>/g, "");
+        return p;
+    });
+    if (paras.length) ul.replaceWith(...paras);
+}`;
+
 // Runs in the page before printing: wraps every `~ ...` line of a paragraph.
 const attributions = `
 for (const p of document.querySelectorAll("p")) {
@@ -21,7 +36,7 @@ for (const p of document.querySelectorAll("p")) {
 module.exports = {
     stylesheet: [path.join(__dirname, "book.css")],
     body_class: ["book"],
-    script: [{ content: attributions }],
+    script: [{ content: dialogues }, { content: attributions }],
     pdf_options: {
         format: "A5",
         margin: "20mm 18mm 22mm",
