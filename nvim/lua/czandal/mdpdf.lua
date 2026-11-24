@@ -2,7 +2,7 @@
 --   :MdPdf[!]    write <file>.pdf next to the markdown file (! opens it)
 --   :MdHtml[!]   write the styled <file>.html instead (! opens it)
 --   :MdBook      PDF laid out as a book (A5, serif, chapters, page numbers),
---                opened in a browser window
+--                opened in the default browser
 --   :MdPreview   toggle: open the PDF and re-render it on every save (:MdPreview book)
 -- Styling lives in nvim/md-to-pdf/ (config.js + style.css, book.js + book.css); front-matter in a
 -- document overrides it. Install: ./setup nvim
@@ -34,6 +34,19 @@ local function browser()
             return path
         end
     end
+end
+
+--- Open `path` in the default web browser (xdg-open would pick the PDF viewer).
+function M.open_in_browser(path)
+    if vim.fn.executable("xdg-settings") == 0 or vim.fn.executable("gtk-launch") == 0 then
+        return false
+    end
+    local id = vim.trim(vim.system({ "xdg-settings", "get", "default-web-browser" }, { text = true }):wait().stdout or "")
+    if id == "" then
+        return false
+    end
+    vim.system({ "gtk-launch", id, path }, { detach = true })
+    return true
 end
 
 --- Render the file of `buf`. opts: { html = bool, book = bool, open = bool, quiet = bool }
@@ -78,10 +91,7 @@ function M.render(buf, opts)
                 notify("wrote " .. vim.fn.fnamemodify(out, ":~:."))
             end
             if opts.open then
-                local exe = opts.open == "browser" and browser()
-                if exe then
-                    vim.system({ exe, "--new-window", out }, { detach = true })
-                else
+                if not (opts.open == "browser" and M.open_in_browser(out)) then
                     vim.ui.open(out)
                 end
             end
@@ -121,7 +131,7 @@ function M.setup(opts)
     local cmd = vim.api.nvim_create_user_command
     cmd("MdPdf", function(a) M.render(0, { open = a.bang }) end, { bang = true, desc = "Markdown -> PDF" })
     cmd("MdHtml", function(a) M.render(0, { html = true, open = a.bang }) end, { bang = true, desc = "Markdown -> HTML" })
-    cmd("MdBook", function() M.render(0, { book = true, open = "browser" }) end, { desc = "Markdown -> book PDF, opened in the browser" })
+    cmd("MdBook", function() M.render(0, { book = true, open = "browser" }) end, { desc = "Markdown -> book PDF, opened in the default browser" })
     cmd("MdPreview", function(a) M.toggle_preview(0, a.args == "book") end, {
         nargs = "?",
         complete = function() return { "book" } end,
