@@ -1,4 +1,3 @@
-vim.opt.encoding = "utf-8"
 -- make sure the spellfile directory exists, sometimes nvim fails to create it
 -- when downloading spellfiles
 -- if NetRW is disabled, downloading of spellfiles fails!

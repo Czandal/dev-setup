@@ -5,7 +5,7 @@ dap.adapters.codelldb = {
   type = "server",
   port = "${port}",
   executable = {
-    command = "codelldb", -- make sure codelldb is in your PATH or give full path here
+    command = "codelldb", -- installed by Mason (see lazy/lsp.lua)
     args = { "--port", "${port}" },
   },
 }
